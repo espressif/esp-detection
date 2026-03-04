@@ -13,7 +13,8 @@ __all__ = "ESPDetect"
 class ESPDetect(Detect):
     def __init__(self, nc=1, ch=()):
         """Initializes the ESP detection layer with specified number of classes and channels."""
-        super().__init__(nc, ch)
+        # Ultralytics Detect now takes (nc, reg_max, end2end, ch), so pass keywords.
+        super().__init__(nc=nc, reg_max=1, ch=ch)
         self.reg_max = 1
         self.no = nc + self.reg_max * 4  # number of outputs per anchor =9
 
@@ -44,4 +45,3 @@ class ESPDetect(Detect):
         score2 = self.cv3[2](x[2])
 
         return box0, score0, box1, score1, box2, score2
-
